@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"github.com/Luxii44/library/server/global"
+	"github.com/Luxii44/library/server/model/common/request"
+	"github.com/Luxii44/library/server/model/system"
+	"github.com/Luxii44/library/server/utils"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )

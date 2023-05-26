@@ -5,9 +5,9 @@ import (
 
 	"github.com/robfig/cron/v3"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"github.com/Luxii44/library/server/config"
+	"github.com/Luxii44/library/server/global"
+	"github.com/Luxii44/library/server/utils"
 )
 
 func Timer() {

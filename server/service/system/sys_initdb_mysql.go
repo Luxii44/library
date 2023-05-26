@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
+	"github.com/Luxii44/library/server/config"
 	"github.com/gookit/color"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"github.com/Luxii44/library/server/utils"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
+	"github.com/Luxii44/library/server/global"
+	"github.com/Luxii44/library/server/model/system/request"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

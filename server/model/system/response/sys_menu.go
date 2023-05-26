@@ -1,6 +1,6 @@
 package response
 
-import "github.com/flipped-aurora/gin-vue-admin/server/model/system"
+import "github.com/Luxii44/library/server/model/system"
 
 type SysMenusResponse struct {
 	Menus []system.SysMenu `json:"menus"`

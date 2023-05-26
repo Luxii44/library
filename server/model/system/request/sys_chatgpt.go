@@ -1,8 +1,8 @@
 package request
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
+	"github.com/Luxii44/library/server/model/common/request"
+	"github.com/Luxii44/library/server/model/system"
 )
 
 type ChatGptRequest struct {

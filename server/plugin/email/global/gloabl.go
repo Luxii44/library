@@ -1,5 +1,5 @@
 package global
 
-import "github.com/flipped-aurora/gin-vue-admin/server/plugin/email/config"
+import "github.com/Luxii44/library/server/plugin/email/config"
 
 var GlobalConfig = new(config.Email)
