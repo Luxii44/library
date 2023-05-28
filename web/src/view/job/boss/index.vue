@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-      <div class="gva-card-box">
+      <!-- <div class="gva-card-box">
         <div class="gva-card gva-top-card">
           <div class="gva-top-card-left">
             <div class="gva-top-card-left-title">早安，管理员，请开始一天的工作吧</div>
@@ -82,7 +82,7 @@
             </el-col>
           </el-row>
         </el-card>
-      <!-- <div class="quick-entrance-title"></div> -->
+      <div class="quick-entrance-title"></div>
       </div>
       <div class="gva-card-box">
         <div class="gva-card">
@@ -100,7 +100,7 @@
             </el-row>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </template>
   

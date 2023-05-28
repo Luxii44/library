@@ -12,7 +12,7 @@
   
   <script>
   export default {
-    name: 'SuperAdmin'
+    name: 'FindJob'
   }
   </script>
   <script setup>

@@ -56,7 +56,7 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 	return &user, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: [piexlmax](https://github.com/piexlmax)679859
 //@function: ChangePassword
 //@description: 修改用户密码
 //@param: u *model.SysUser, newPassword string

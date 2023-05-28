@@ -5,7 +5,7 @@ import { emitter } from '@/utils/bus.js'
 import router from '@/router/index'
 
 const service = axios.create({
-  baseURL: "http://localhost:8888",//import.meta.env.VITE_BASE_API,
+  baseURL: "http://localhost:3000",//import.meta.env.VITE_BASE_API,
   timeout: 99999
 })
 let acitveAxios = 0
