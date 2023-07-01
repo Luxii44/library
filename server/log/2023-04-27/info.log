@@ -1,3 +1,0 @@
-[github.com/Luxii44/library/server]2023/04/27 - 17:22:08.321	[34minfo[0m	D:/GoProjects/library/server/initialize/router.go:39	register swagger handler
-[github.com/Luxii44/library/server]2023/04/27 - 17:22:08.358	[34minfo[0m	D:/GoProjects/library/server/initialize/router.go:76	router register success
-[github.com/Luxii44/library/server]2023/04/27 - 17:22:08.361	[34minfo[0m	D:/GoProjects/library/server/core/server.go:36	server run success on 	{"address": ":8888"}

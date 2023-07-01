@@ -2,6 +2,7 @@ package system
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	"github.com/Luxii44/library/server/global"
@@ -107,6 +108,7 @@ func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap ma
 func (menuService *MenuService) GetInfoList() (list interface{}, total int64, err error) {
 	var menuList []system.SysBaseMenu
 	treeMap, err := menuService.getBaseMenuTreeMap()
+	fmt.Println(treeMap)
 	menuList = treeMap["0"]
 	for i := 0; i < len(menuList); i++ {
 		err = menuService.getBaseChildrenList(&menuList[i], treeMap)

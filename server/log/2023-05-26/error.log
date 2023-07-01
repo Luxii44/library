@@ -1,4 +1,0 @@
-[github.com/flipped-aurora/gin-vue-admin/server]2023/05/26 - 10:45:48.514	[31merror[0m	D:/GoProjects/library/server/api/v1/system/sys_jwt_blacklist.go:26	jwt作废失败!	{"error": "invalid connection"}
-[github.com/flipped-aurora/gin-vue-admin/server]2023/05/26 - 10:45:51.575	[31merror[0m	D:/GoProjects/library/server/api/v1/system/sys_menu.go:29	获取失败!	{"error": "invalid connection"}
-[github.com/flipped-aurora/gin-vue-admin/server]2023/05/26 - 15:46:39.422	[31merror[0m	D:/GoProjects/library/server/core/server.go:48	listen tcp :8888: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
-[github.com/flipped-aurora/gin-vue-admin/server]2023/05/26 - 15:47:10.132	[31merror[0m	D:/GoProjects/library/server/core/server.go:48	listen tcp :8888: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.

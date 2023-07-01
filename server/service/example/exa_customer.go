@@ -22,7 +22,7 @@ func (exa *CustomerService) CreateExaCustomer(e example.ExaCustomer) (err error)
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)
-//@function: DeleteFileChunk
+//@function: DeleteExaCustomer
 //@description: 删除客户
 //@param: e model.ExaCustomer
 //@return: err error

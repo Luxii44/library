@@ -1,6 +1,8 @@
 package system
 
-import "github.com/Luxii44/library/server/service"
+import (
+	"github.com/Luxii44/library/server/service"
+)
 
 type ApiGroup struct {
 	DBApi
@@ -37,4 +39,5 @@ var (
 	dictionaryDetailService = service.ServiceGroupApp.SystemServiceGroup.DictionaryDetailService
 	authorityBtnService     = service.ServiceGroupApp.SystemServiceGroup.AuthorityBtnService
 	chatGptService          = service.ServiceGroupApp.SystemServiceGroup.ChatGptService
+	organizationService     = service.ServiceGroupApp.SystemServiceGroup.OrganizationService
 )

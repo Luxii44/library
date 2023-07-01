@@ -55,18 +55,40 @@ func (i *initUser) InitializeData(ctx context.Context) (next context.Context, er
 			Password:    adminPassword,
 			NickName:    "Luxii",
 			HeaderImg:   "https://qmplusimg.henrongyi.top/gva_header.jpg",
-			AuthorityId: 888,
+			AuthorityId: 1,
 			Phone:       "19875606386",
 			Email:       "Luxii0826@163.com",
 		},
 		{
 			UUID:        uuid.NewV4(),
-			Account:     "Luxii",
-			Username:    "a303176530",
+			Account:     "user01",
+			Username:    "Luxii",
 			Password:    utils.BcryptHash("Lx345501"),
 			NickName:    "Luxii",
 			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
-			AuthorityId: 9528,
+			AuthorityId: 8880,
+			Phone:       "19875606386",
+			Email:       "Luxii0826@163.com",
+		},
+		{
+			UUID:        uuid.NewV4(),
+			Account:     "finance01",
+			Username:    "小明",
+			Password:    utils.BcryptHash("123456"),
+			NickName:    "小明",
+			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
+			AuthorityId: 1100,
+			Phone:       "19875606386",
+			Email:       "Luxii0826@163.com",
+		},
+		{
+			UUID:        uuid.NewV4(),
+			Account:     "finance02",
+			Username:    "小红",
+			Password:    utils.BcryptHash("123456"),
+			NickName:    "小红",
+			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
+			AuthorityId: 1101,
 			Phone:       "19875606386",
 			Email:       "Luxii0826@163.com",
 		},
@@ -88,7 +110,7 @@ func (i *initUser) InitializeData(ctx context.Context) (next context.Context, er
 			Password:    password,
 			NickName:    "备用账号01",
 			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
-			AuthorityId: 9528,
+			AuthorityId: 1,
 			Phone:       "19875606386",
 			Email:       "Luxii0826@163.com",
 		},
@@ -116,9 +138,9 @@ func (i *initUser) DataInserted(ctx context.Context) bool {
 		return false
 	}
 	var record sysModel.SysUser
-	if errors.Is(db.Where("username = ?", "a303176530").
+	if errors.Is(db.Where("username = ?", "Luxii").
 		Preload("Authorities").First(&record).Error, gorm.ErrRecordNotFound) { // 判断是否存在数据
 		return false
 	}
-	return len(record.Authorities) > 0 && record.Authorities[0].AuthorityId == 888
+	return len(record.Authorities) > 0 && record.Authorities[0].AuthorityId == 1
 }

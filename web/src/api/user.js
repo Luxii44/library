@@ -55,6 +55,22 @@ export const changePassword = (data) => {
 // @Param data body modelInterface.PageInfo true "分页获取用户列表"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /user/getUserList [post]
+export const getOrgList = (data) => {
+  return service({
+    url: '/user/getOrgList',
+    method: 'post',
+    data: data
+  })
+}
+
+// @Tags User
+// @Summary 分页获取用户列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body modelInterface.PageInfo true "分页获取用户列表"
+// @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /user/getUserList [post]
 export const getUserList = (data) => {
   return service({
     url: '/user/getUserList',

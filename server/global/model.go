@@ -8,7 +8,7 @@ import (
 )
 
 type GVA_MODEL struct {
-	ID        uint           `gorm:"primarykey"` // 主键ID
+	ID        uint           `gorm:"primarykey;autoIncrement"` // 主键ID
 	Creator   uuid.UUID      // 创建者
 	Modifier  uuid.UUID      // 更新者
 	Deleter   uuid.UUID      `gorm:"index" json:"-"` // 删除者

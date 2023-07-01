@@ -33,7 +33,7 @@ func Routers() *gin.Engine {
 	// 跨域，如需跨域可以打开下面的注释
 	Router.Use(middleware.Cors()) // 直接放行全部跨域请求
 	// Router.Use(middleware.CorsByRules()) // 按照配置的规则放行跨域请求
-	//global.GVA_LOG.Info("use middleware cors")
+	global.GVA_LOG.Info("use middleware cors")
 	docs.SwaggerInfo.BasePath = global.GVA_CONFIG.System.RouterPrefix
 	Router.GET(global.GVA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.GVA_LOG.Info("register swagger handler")
@@ -67,9 +67,11 @@ func Routers() *gin.Engine {
 		systemRouter.InitSysDictionaryDetailRouter(PrivateGroup) // 字典详情管理
 		systemRouter.InitAuthorityBtnRouterRouter(PrivateGroup)  // 字典详情管理
 		systemRouter.InitChatGptRouter(PrivateGroup)             // chatGpt接口
+		systemRouter.InitOrganizationRouter(PrivateGroup)        // 组织架构接口
 
 		exampleRouter.InitCustomerRouter(PrivateGroup)              // 客户路由
 		exampleRouter.InitFileUploadAndDownloadRouter(PrivateGroup) // 文件上传下载功能路由
+		exampleRouter.InitRecruitRouter(PrivateGroup)               // 招聘相关路由
 
 	}
 

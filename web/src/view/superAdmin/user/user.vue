@@ -1,80 +1,92 @@
 <template>
-  <div>
-    <warning-bar title="注：右上角头像下拉可切换角色" />
-    <div class="gva-table-box">
-      <div class="gva-btn-list">
-        <el-button type="primary" icon="plus" @click="addUser">新增用户</el-button>
-      </div>
-      <el-table
-        :data="tableData"
-        row-key="ID"
-      >
-        <el-table-column align="left" label="头像" min-width="75">
-          <template #default="scope">
-            <CustomPic style="margin-top:8px" :pic-src="scope.row.headerImg" />
-          </template>
-        </el-table-column>
-        <el-table-column align="left" label="ID" min-width="50" prop="ID" />
-        <el-table-column align="left" label="用户名" min-width="150" prop="userName" />
-        <el-table-column align="left" label="昵称" min-width="150" prop="nickName" />
-        <el-table-column align="left" label="手机号" min-width="180" prop="phone" />
-        <el-table-column align="left" label="邮箱" min-width="180" prop="email" />
-        <el-table-column align="left" label="用户角色" min-width="200">
-          <template #default="scope">
-            <el-cascader
-              v-model="scope.row.authorityIds"
-              :options="authOptions"
-              :show-all-levels="false"
-              collapse-tags
-              :props="{ multiple:true,checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-              :clearable="false"
-              @visible-change="(flag)=>{changeAuthority(scope.row,flag,0)}"
-              @remove-tag="(removeAuth)=>{changeAuthority(scope.row,false,removeAuth)}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column align="left" label="启用" min-width="150">
-          <template #default="scope">
-            <el-switch
-              v-model="scope.row.enable"
-              inline-prompt
-              :active-value="1"
-              :inactive-value="2"
-              @change="()=>{switchEnable(scope.row)}"
-            />
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作" min-width="250" fixed="right">
-          <template #default="scope">
-            <el-popover v-model="scope.row.visible" placement="top" width="160">
-              <p>确定要删除此用户吗</p>
-              <div style="text-align: right; margin-top: 8px;">
-                <el-button type="primary" link @click="scope.row.visible = false">取消</el-button>
-                <el-button type="primary" @click="deleteUserFunc(scope.row)">确定</el-button>
-              </div>
-              <template #reference>
-                <el-button type="primary" link icon="delete">删除</el-button>
+  <div class="page-box">
+    <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
+    <el-row :gutter="10" style="height: 100%;">
+      <el-col :span="4">
+        <div class="gva-tree-box">
+          <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick" />
+        </div>
+      </el-col>
+      <el-col :span="20">
+        <div class="gva-table-box" style="height:100%">
+          <div class="gva-btn-list">
+            <el-button type="primary" icon="plus" @click="addUser">新增用户</el-button>
+          </div>
+          <el-table
+            :data="tableData"
+            row-key="ID"
+          >
+            <el-table-column align="left" label="头像" min-width="75">
+              <template #default="scope">
+                <CustomPic style="margin-top:8px" :pic-src="scope.row.headerImg" />
               </template>
-            </el-popover>
-            <el-button type="primary" link icon="edit" @click="openEdit(scope.row)">编辑</el-button>
-            <el-button type="primary" link icon="magic-stick" @click="resetPasswordFunc(scope.row)">重置密码</el-button>
-          </template>
-        </el-table-column>
+            </el-table-column>
+            <el-table-column align="left" label="ID" min-width="50" prop="ID" />
+            <el-table-column align="left" label="用户名" min-width="150" prop="userName" />
+            <el-table-column align="left" label="昵称" min-width="150" prop="nickName" />
+            <el-table-column align="left" label="手机号" min-width="180" prop="phone" />
+            <el-table-column align="left" label="邮箱" min-width="180" prop="email" />
+            <el-table-column align="left" label="用户角色" min-width="200">
+              <template #default="scope">
+                <el-cascader
+                  v-model="scope.row.authorityIds"
+                  :options="authOptions"
+                  :show-all-levels="false"
+                  collapse-tags
+                  :props="{ multiple:true,checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+                  :clearable="false"
+                  @visible-change="(flag)=>{changeAuthority(scope.row,flag,0)}"
+                  @remove-tag="(removeAuth)=>{changeAuthority(scope.row,false,removeAuth)}"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column align="left" label="启用" min-width="150">
+              <template #default="scope">
+                <el-switch
+                  v-model="scope.row.enable"
+                  inline-prompt
+                  :active-value="1"
+                  :inactive-value="2"
+                  @change="()=>{switchEnable(scope.row)}"
+                />
+              </template>
+            </el-table-column>
 
-      </el-table>
-      <div class="gva-pagination">
-        <el-pagination
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
-      </div>
-    </div>
+            <el-table-column label="操作" min-width="250" fixed="right">
+              <template #default="scope">
+                <el-popover v-model="scope.row.visible" placement="top" width="160">
+                  <p>确定要删除此用户吗</p>
+                  <div style="text-align: right; margin-top: 8px;">
+                    <el-button type="primary" link @click="scope.row.visible = false">取消</el-button>
+                    <el-button type="primary" @click="deleteUserFunc(scope.row)">确定</el-button>
+                  </div>
+                  <template #reference>
+                    <el-button type="primary" link icon="delete">删除</el-button>
+                  </template>
+                </el-popover>
+                <el-button type="primary" link icon="edit" @click="openEdit(scope.row)">编辑</el-button>
+                <el-button type="primary" link icon="magic-stick" @click="resetPasswordFunc(scope.row)">重置密码</el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+          <div class="gva-pagination">
+            <el-pagination
+              :current-page="page"
+              :page-size="pageSize"
+              :page-sizes="[10, 30, 50, 100]"
+              :total="total"
+              layout="total, sizes, prev, pager, next, jumper"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+            />
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    
+    
+    
     <el-dialog
       v-model="addUserDialog"
       custom-class="user-dialog"
@@ -140,14 +152,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'User',
-}
-</script>
-
 <script setup>
-
 import {
   getUserList,
   setUserAuthorities,
@@ -163,6 +168,78 @@ import { setUserInfo, resetPassword } from '@/api/user.js'
 
 import { nextTick, ref, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+defineOptions({
+  name: 'User',
+})
+
+const handleNodeClick = (data) => {
+  console.log(data)
+}
+
+const data = [
+  {
+    label: 'Level one 1',
+    children: [
+      {
+        label: 'Level two 1-1',
+        children: [
+          {
+            label: 'Level three 1-1-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 2',
+    children: [
+      {
+        label: 'Level two 2-1',
+        children: [
+          {
+            label: 'Level three 2-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 2-2',
+        children: [
+          {
+            label: 'Level three 2-2-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 3',
+    children: [
+      {
+        label: 'Level two 3-1',
+        children: [
+          {
+            label: 'Level three 3-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 3-2',
+        children: [
+          {
+            label: 'Level three 3-2-1',
+          },
+        ],
+      },
+    ],
+  },
+]
+
+const defaultProps = {
+  children: 'children',
+  label: 'label',
+}
+
 const path = ref(import.meta.env.VITE_BASE_API + '/')
 // 初始化相关
 const setAuthorityOptions = (AuthorityData, optionsData) => {
@@ -202,6 +279,16 @@ const handleCurrentChange = (val) => {
 }
 
 // 查询
+const getTreeData = async() => {
+  const table = await getUserList({ page: page.value, pageSize: pageSize.value })
+  if (table.code === 0) {
+    tableData.value = table.data.list
+    total.value = table.data.total
+    page.value = table.data.page
+    pageSize.value = table.data.pageSize
+  }
+}
+// 查询
 const getTableData = async() => {
   const table = await getUserList({ page: page.value, pageSize: pageSize.value })
   if (table.code === 0) {
@@ -218,6 +305,7 @@ watch(() => tableData.value, () => {
 
 const initPage = async() => {
   getTableData()
+  getTreeData()
   const res = await getAuthorityList({ page: 1, pageSize: 999 })
   setOptions(res.data.list)
 }

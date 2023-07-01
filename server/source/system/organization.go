@@ -4,121 +4,101 @@ import (
 	"context"
 	sysModel "github.com/Luxii44/library/server/model/system"
 	"github.com/Luxii44/library/server/service/system"
-	"github.com/Luxii44/library/server/utils"
 	"github.com/pkg/errors"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
 
-const initOrderUser = initOrderAuthority + 1
+const initOrderOrg = initOrderUser + 1
 
-type initUser struct{}
+type initOrganization struct{}
 
 // auto run
 func init() {
-	system.RegisterInit(initOrderUser, &initUser{})
+	system.RegisterInit(initOrderOrg, &initOrganization{})
 }
 
-func (i *initUser) MigrateTable(ctx context.Context) (context.Context, error) {
+//待优化
+func (i *initOrganization) MigrateTable(ctx context.Context) (context.Context, error) {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return ctx, system.ErrMissingDBContext
 	}
-	return ctx, db.AutoMigrate(&sysModel.SysUser{}, &sysModel.SysChatGptOption{})
+	return ctx, db.AutoMigrate(&sysModel.SysOrganization{})
 }
 
-func (i *initUser) TableCreated(ctx context.Context) bool {
+func (i *initOrganization) TableCreated(ctx context.Context) bool {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return false
 	}
-	return db.Migrator().HasTable(&sysModel.SysUser{})
+	return db.Migrator().HasTable(&sysModel.SysOrganization{})
 }
 
-func (i initUser) InitializerName() string {
-	return sysModel.SysUser{}.TableName()
+func (i initOrganization) InitializerName() string {
+	return sysModel.SysOrganization{}.TableName()
 }
 
-func (i *initUser) InitializeData(ctx context.Context) (next context.Context, err error) {
+func (i *initOrganization) InitializeData(ctx context.Context) (next context.Context, err error) {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return ctx, system.ErrMissingDBContext
 	}
-	password := utils.BcryptHash("6447985")
-	adminPassword := utils.BcryptHash("123456")
+	Nulluuid, err := uuid.FromString("00000000-0000-0000-0000-000000000000")
+	Topuuid := uuid.NewV4()
+	Componyuuid := uuid.NewV4()
+	Departmentuuid := uuid.NewV4()
 
-	entities := []sysModel.SysUser{
+	entities := []sysModel.SysOrganization{
 		{
-			UUID:        uuid.NewV4(),
-			Account:     "admin",
-			Username:    "admin",
-			Password:    adminPassword,
-			NickName:    "Luxii",
-			HeaderImg:   "https://qmplusimg.henrongyi.top/gva_header.jpg",
-			AuthorityId: 888,
-			Phone:       "19875606386",
-			Email:       "Luxii0826@163.com",
+			UUID:                 Topuuid,
+			OrganizationCode:     "",
+			OrganizationName:     "强盛集团",
+			OrganizationFullName: "强盛集团",
+			ParentUUID:           Nulluuid,
+			CompanyUUID:          nil,
+			TopOrganizationUUID:  Nulluuid,
 		},
 		{
-			UUID:        uuid.NewV4(),
-			Account:     "Luxii",
-			Username:    "a303176530",
-			Password:    utils.BcryptHash("Lx345501"),
-			NickName:    "Luxii",
-			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
-			AuthorityId: 9528,
-			Phone:       "19875606386",
-			Email:       "Luxii0826@163.com",
+			UUID:                 Componyuuid,
+			OrganizationName:     "XXX公司",
+			OrganizationFullName: "强盛集团-XXX公司",
+			ParentUUID:           Topuuid,
+			CompanyUUID:          &Componyuuid,
+			TopOrganizationUUID:  Topuuid,
 		},
 		{
-			UUID:        uuid.NewV4(),
-			Account:     "test01",
-			Username:    "test",
-			Password:    password,
-			NickName:    "测试用户01",
-			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
-			AuthorityId: 9528,
-			Phone:       "19875606386",
-			Email:       "Luxii0826@163.com",
+			UUID:                 Departmentuuid,
+			OrganizationName:     "管理部门",
+			OrganizationFullName: "强盛集团-XXX公司-管理部门",
+			ParentUUID:           Componyuuid,
+			CompanyUUID:          &Componyuuid,
+			TopOrganizationUUID:  Topuuid,
 		},
 		{
-			UUID:        uuid.NewV4(),
-			Account:     "Reserve01",
-			Username:    "Reserve",
-			Password:    password,
-			NickName:    "备用账号01",
-			HeaderImg:   "https:///qmplusimg.henrongyi.top/1572075907logo.png",
-			AuthorityId: 9528,
-			Phone:       "19875606386",
-			Email:       "Luxii0826@163.com",
+			UUID:                 Departmentuuid,
+			OrganizationName:     "财务部门",
+			OrganizationFullName: "强盛集团-XXX公司-财务部门",
+			ParentUUID:           Componyuuid,
+			CompanyUUID:          &Componyuuid,
+			TopOrganizationUUID:  Topuuid,
 		},
 	}
 	if err = db.Create(&entities).Error; err != nil {
-		return ctx, errors.Wrap(err, sysModel.SysUser{}.TableName()+"表数据初始化失败!")
+		return ctx, errors.Wrap(err, sysModel.SysOrganization{}.TableName()+"表数据初始化失败!")
 	}
 	next = context.WithValue(ctx, i.InitializerName(), entities)
-	authorityEntities, ok := ctx.Value(initAuthority{}.InitializerName()).([]sysModel.SysAuthority)
-	if !ok {
-		return next, errors.Wrap(system.ErrMissingDependentContext, "创建 [用户-权限] 关联失败, 未找到权限表初始化数据")
-	}
-	if err = db.Model(&entities[0]).Association("Authorities").Replace(authorityEntities); err != nil {
-		return next, err
-	}
-	if err = db.Model(&entities[1]).Association("Authorities").Replace(authorityEntities[:1]); err != nil {
-		return next, err
-	}
 	return next, err
 }
 
-func (i *initUser) DataInserted(ctx context.Context) bool {
+func (i *initOrganization) DataInserted(ctx context.Context) bool {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return false
 	}
-	var record sysModel.SysUser
-	if errors.Is(db.Where("username = ?", "a303176530").
-		Preload("Authorities").First(&record).Error, gorm.ErrRecordNotFound) { // 判断是否存在数据
+	var record sysModel.SysOrganization
+	if errors.Is(db.Where("organizationName = ?", "XXX公司").First(&record).Error, gorm.ErrRecordNotFound) { // 判断是否存在数据
 		return false
 	}
-	return len(record.Authorities) > 0 && record.Authorities[0].AuthorityId == 888
+	return true
 }
