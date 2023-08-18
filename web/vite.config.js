@@ -91,12 +91,11 @@ export default ({
       }
     },
   }
-
-  if (NODE_ENV === 'development') {
-    config.plugins.push(
-      fullImportPlugin()
-    )
-  } else {
+  // if (NODE_ENV === 'development') {
+  //   config.plugins.push(
+  //     fullImportPlugin()
+  //   )
+  // } else {
     config.plugins.push(AutoImport({
       resolvers: [ElementPlusResolver()]
     }),
@@ -105,6 +104,6 @@ export default ({
         importStyle: 'sass'
       })]
     }))
-  }
+  // }
   return config
 }

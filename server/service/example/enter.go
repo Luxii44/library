@@ -4,4 +4,5 @@ type ServiceGroup struct {
 	CustomerService
 	FileUploadAndDownloadService
 	RecruitService
+	ChatService
 }

@@ -244,8 +244,13 @@
             <template #append>分</template>
           </el-input>
         </el-form-item>
+        <el-form-item label="投递数量" prop="deliverCount" style="width:30%">
+          <el-input v-model="Plan.deliverCount" types="number" placeholder="请输入投递数量" >
+            <template #append>个</template>
+          </el-input>
+        </el-form-item>
         <el-form-item label="账号" prop="account" style="width:30%">
-          <span>{{ Plan.accout }}</span>
+          <span>{{ Plan.account }}</span>
         </el-form-item>
         <el-form-item label="是否启用" style="width:30%">
           <el-select v-model="Plan.enable" placeholder="账号是否启用">
@@ -466,6 +471,7 @@
     delivery:1,
     beginTime:"",
     intervalTime:30,
+    deliverCount:30,
     account:"",
     enable:1
   })
@@ -477,7 +483,7 @@
   // 新增计划
   const openPLan = (account) => {
     dialogPlanVisible.value=true
-    Plan.value.Account=account
+    Plan.value.account=account
   }
   const selectCity = async(item) => {
     Plan.value.cityName=item.name

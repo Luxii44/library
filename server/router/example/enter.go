@@ -4,4 +4,5 @@ type RouterGroup struct {
 	CustomerRouter
 	FileUploadAndDownloadRouter
 	RecruitRouter
+	ChatRouter
 }

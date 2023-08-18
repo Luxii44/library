@@ -1,14 +1,14 @@
 <template>
   <div class="page-box">
     <!-- <warning-bar title="注：右上角头像下拉可切换角色" /> -->
-    <el-row :gutter="10" style="height: 100%;">
+    <el-row :gutter="10">
       <el-col :span="4">
         <div class="gva-tree-box">
           <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick" />
         </div>
       </el-col>
       <el-col :span="20">
-        <div class="gva-table-box" style="height:100%">
+        <div class="gva-table-box">
           <div class="gva-btn-list">
             <el-button type="primary" icon="plus" @click="addUser">新增用户</el-button>
           </div>

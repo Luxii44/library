@@ -1,6 +1,7 @@
 package global
 
 import (
+	"nhooyr.io/websocket"
 	"sync"
 
 	"github.com/Luxii44/library/server/utils/timer"
@@ -30,6 +31,7 @@ var (
 
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex
+	SocketTask []*websocket.Conn
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

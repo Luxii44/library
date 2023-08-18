@@ -371,22 +371,7 @@ func (e *RecruitApi) GetBusinessDistrict(c *gin.Context) {
 	}
 	data := v.(map[string]interface{})
 	m1 := data["zpData"].(map[string]interface{})
-	fmt.Println(m1["businessDistrict"])
+	//fmt.Println(m1["businessDistrict"])
 	// 输出响应内容
 	response.OkWithDetailed(m1["businessDistrict"], "获取成功", c)
-	//if err != nil {
-	//	response.FailWithMessage(err.Error(), c)
-	//	return
-	//}
-	//err = utils.Verify(pageInfo, utils.PageInfoVerify)
-	//if err != nil {
-	//	response.FailWithMessage(err.Error(), c)
-	//	return
-	//}
-	//recruitAccountList, total, err := recruitService.GetRecruitAccountList(utils.GetUserAuthorityId(c), pageInfo)
-	//if err != nil {
-	//	global.GVA_LOG.Error("获取失败!", zap.Error(err))
-	//	response.FailWithMessage("获取失败"+err.Error(), c)
-	//	return
-	//}
 }

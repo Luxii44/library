@@ -35,7 +35,7 @@ func (ExaRecruitAccount) TableName() string {
 type ExaRecruitPlan struct {
 	global.GVA_MODEL
 	Query                     string `json:"query" gorm:"comment:关键字"`                     // 关键字
-	City                      string `json:"city" gorm:"comment:城市"`                       // 城市
+	City                      int64  `json:"city" gorm:"comment:城市"`                       // 城市
 	CityName                  string `json:"cityName" gorm:"comment:城市名"`                  // 城市名
 	MultiBusinessDistrict     string `json:"multiBusinessDistrict" gorm:"comment:区域"`      //区域
 	MultiBusinessDistrictName string `json:"multiBusinessDistrictName" gorm:"comment:区域名"` //区域名
@@ -46,7 +46,7 @@ type ExaRecruitPlan struct {
 	Degree                    string `json:"degree" gorm:"comment:经验"`                     // 经验
 	Scale                     string `json:"scale" gorm:"comment:经验"`                      // 经验
 	Stage                     string `json:"stage" gorm:"comment:经验"`                      // 经验
-	Position                  string `json:"position" gorm:"comment:经验"`                   // 经验
+	Position                  int64  `json:"position" gorm:"comment:经验"`                   // 经验
 	JobType                   string `json:"jobType" gorm:"comment:经验"`                    // 经验
 	Salary                    string `json:"salary" gorm:"comment:经验"`                     // 经验
 	MultiSubway               string `json:"multiSubway" gorm:"comment:经验"`                // 经验
@@ -54,7 +54,7 @@ type ExaRecruitPlan struct {
 	Delivery     int    `json:"delivery" gorm:"default:1;comment:是否投递简历 1是 2否"`  //是否投递简历 1是 2否
 	DeliverCount int    `json:"deliverCount" gorm:"comment:投递数量"`                //投递数量
 	Account      string `json:"account" gorm:"comment:关联账号"`                     //关联账号
-	UrlPath      string `json:"urlPath" gorm:"comment:经验"`                       // 经验
+	UrlPath      string `json:"urlPath" gorm:"type:text(500);comment:经验"`        // 经验
 	Enable       int    `json:"enable" gorm:"default:1;comment:账号是否被冻结 1正常 2冻结"` //账号是否被冻结 1正常 2冻结
 	//SysUser        system.SysUser    `json:"sysUser" form:"sysUser" gorm:"comment:管理详情"`              // 管理详情
 }

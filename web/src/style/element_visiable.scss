@@ -32,7 +32,6 @@
 .page-box{
     width: 100%;
     height: 100%;
-    position: absolute;
 }
 
 .gva-search-box {
@@ -54,6 +53,7 @@
     background-color: #fff;
     border-radius: 2px;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .gva-table-box {

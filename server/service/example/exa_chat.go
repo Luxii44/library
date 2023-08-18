@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-type RecruitService struct{}
+type ChatService struct{}
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: AddRecruitAccount
@@ -25,9 +25,38 @@ type RecruitService struct{}
 //@param: e model.ExaRecruitAccount
 //@return: err error
 
-func (exa *RecruitService) AddRecruitAccount(e example.ExaRecruitAccount) (err error) {
-	err = global.GVA_DB.Create(&e).Error
+func (exa *ChatService) ReceiveMessages(e example.ChatMessage) (err error) {
+	fmt.Println(e)
+	//如果数据中有room的字段，则是群聊，如果没有，在redis和数据库里面寻找
+	//db := global.GVA_DB.Model(&example.ChatMessage{})
+	switch e.MessageType {
+	case 0:
+		//db.Create(&e)
+		fmt.Println("文本为：" + e.MessageContent)
+	case 1:
+		fmt.Println("文本为：" + e.MessageContent)
+	default:
+		fmt.Println(e)
+	}
 	return err
+}
+
+func (exa *ChatService) StartTimer(f func()) {
+	t1 := time.NewTimer(time.Second * 5)
+	t2 := time.NewTimer(time.Second * 10)
+
+	for {
+		select {
+		case <-t1.C:
+			println("5s timer")
+			t1.Reset(time.Second * 5)
+
+		case <-t2.C:
+			//go f()
+			println("10s timer")
+			t2.Reset(time.Second * 10)
+		}
+	}
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)
@@ -36,7 +65,7 @@ func (exa *RecruitService) AddRecruitAccount(e example.ExaRecruitAccount) (err e
 //@param: e model.ExaRecruitAccount
 //@return: err error
 
-func (exa *RecruitService) DeleteRecruitAccount(e *example.ExaRecruitAccount) (err error) {
+func (exa *ChatService) DeleteRecruitAccount(e *example.ExaRecruitAccount) (err error) {
 	e.Enable = 2
 	err = global.GVA_DB.Save(e).Error
 	return err
@@ -48,7 +77,7 @@ func (exa *RecruitService) DeleteRecruitAccount(e *example.ExaRecruitAccount) (e
 //@param: e *model.ExaRecruitAccount
 //@return: err error
 
-func (exa *RecruitService) UpdateRecruitAccount(e *example.ExaRecruitAccount) (err error) {
+func (exa *ChatService) UpdateRecruitAccount(e *example.ExaRecruitAccount) (err error) {
 	err = global.GVA_DB.Save(e).Error
 	return err
 }
@@ -59,7 +88,7 @@ func (exa *RecruitService) UpdateRecruitAccount(e *example.ExaRecruitAccount) (e
 //@param: id uint
 //@return: customer model.ExaRecruitAccount, err error
 
-func (exa *RecruitService) GetExaCustomer(id uint) (customer example.ExaRecruitAccount, err error) {
+func (exa *ChatService) GetExaCustomer(id uint) (customer example.ExaRecruitAccount, err error) {
 	err = global.GVA_DB.Where("id = ?", id).First(&customer).Error
 	return
 }
@@ -70,7 +99,7 @@ func (exa *RecruitService) GetExaCustomer(id uint) (customer example.ExaRecruitA
 //@param: sysUserAuthorityID string, info request.PageInfo
 //@return: list interface{}, total int64, err error
 
-func (exa *RecruitService) GetRecruitAccountList(sysUserAuthorityID uint, info request.PageInfo) (list interface{}, total int64, err error) {
+func (exa *ChatService) GetRecruitAccountList(sysUserAuthorityID uint, info request.PageInfo) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	//判断是否有权限
@@ -87,7 +116,7 @@ func (exa *RecruitService) GetRecruitAccountList(sysUserAuthorityID uint, info r
 //@param: e model.ExaRecruitPlan
 //@return: err error
 
-func (exa *RecruitService) CreateRecruitPlan(e example.ExaRecruitPlan) (err error) {
+func (exa *ChatService) CreateRecruitPlan(e example.ExaRecruitPlan) (err error) {
 	//根据账号表关联，从平台表获取工作列表url
 	u, err := url.Parse("https://www.zhipin.com/wapi/zpgeek/search/joblist.json")
 	if err != nil {
@@ -174,7 +203,7 @@ func (exa *RecruitService) CreateRecruitPlan(e example.ExaRecruitPlan) (err erro
 //@param: e model.ExaRecruitPlan
 //@return: err error
 
-func (exa *RecruitService) DeleteRecruitPlan(e *example.ExaRecruitPlan) (err error) {
+func (exa *ChatService) DeleteRecruitPlan(e *example.ExaRecruitPlan) (err error) {
 	e.Enable = 2
 	err = global.GVA_DB.Save(e).Error
 	return err
@@ -186,7 +215,7 @@ func (exa *RecruitService) DeleteRecruitPlan(e *example.ExaRecruitPlan) (err err
 //@param: e *model.ExaRecruitPlan
 //@return: err error
 
-func (exa *RecruitService) UpdateRecruitPlan(e *example.ExaRecruitPlan) (err error) {
+func (exa *ChatService) UpdateRecruitPlan(e *example.ExaRecruitPlan) (err error) {
 	err = global.GVA_DB.Save(e).Error
 	return err
 }
@@ -197,7 +226,7 @@ func (exa *RecruitService) UpdateRecruitPlan(e *example.ExaRecruitPlan) (err err
 //@param: sysUserAuthorityID string, info request.PageInfo
 //@return: list interface{}, total int64, err error
 
-func (exa *RecruitService) GetRecruitPlanList(sysUserAuthorityID uint, info exaRequest.GetRecruitPlanList) (list interface{}, total int64, err error) {
+func (exa *ChatService) GetRecruitPlanList(sysUserAuthorityID uint, info exaRequest.GetRecruitPlanList) (list interface{}, total int64, err error) {
 	var RecruitPlan []example.ExaRecruitPlan
 	db := global.GVA_DB.Model(&example.ExaRecruitPlan{})
 	if info.Account != nil {
@@ -213,42 +242,12 @@ func (exa *RecruitService) GetRecruitPlanList(sysUserAuthorityID uint, info exaR
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)
-//@function: ExecutePlan
-//@description: 执行批量投递
-//@param:
-//@return:
-
-func ExecutePlan() {
-	var exaJobs []example.ExaJob
-	db := global.GVA_DB.Model(&example.ExaJob{})
-	db.Select("url_path").Find(&exaJobs)
-	for key, value := range exaJobs {
-		//投递,根据配置文件间隔发送
-		//先使用自定义的,再使用模板
-		//并获取新的url判断是否在数据库
-		fmt.Println(key, value)
-	}
-	fmt.Println("成功")
-	//做参考、还需考虑多进程并发的问题、还有执行挂了的问题
-	//timer := time.NewTimer(durationUntilSix)
-	//
-	//for {
-	//	<-timer.C
-	//	// 执行你的任务
-	//	fmt.Println("定时任务执行")
-	//
-	//	// 重置定时器为30分钟后
-	//	timer.Reset(30 * time.Minute)
-	//}
-}
-
-//@author: [piexlmax](https://github.com/piexlmax)
 //@function: GetReply
 //@description: 从接口根据职位url获取回复的数据并写入数据库
 //@param:
 //@return: isSuccess string
 
-func (exa *RecruitService) GetReply() (isSuccess string) {
+func (exa *ChatService) GetReply() (isSuccess string) {
 	//从接口获取回复列表,再从数据库查出来,再更新
 	var exaJobs []example.ExaJob
 	db := global.GVA_DB.Model(&example.ExaJob{})
