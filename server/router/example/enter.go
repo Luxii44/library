@@ -5,4 +5,5 @@ type RouterGroup struct {
 	FileUploadAndDownloadRouter
 	RecruitRouter
 	ChatRouter
+	MarkdownRouter
 }

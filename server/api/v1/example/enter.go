@@ -4,9 +4,10 @@ import "github.com/Luxii44/library/server/service"
 
 type ApiGroup struct {
 	CustomerApi
+	FileUploadAndDownloadApi
 	RecruitApi
 	ChatApi
-	FileUploadAndDownloadApi
+	MarkdownApi
 }
 
 var (
@@ -14,4 +15,5 @@ var (
 	fileUploadAndDownloadService = service.ServiceGroupApp.ExampleServiceGroup.FileUploadAndDownloadService
 	recruitService               = service.ServiceGroupApp.ExampleServiceGroup.RecruitService
 	chatService                  = service.ServiceGroupApp.ExampleServiceGroup.ChatService
+	markdownService              = service.ServiceGroupApp.ExampleServiceGroup.MarkdownService
 )

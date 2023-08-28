@@ -5,4 +5,5 @@ type ServiceGroup struct {
 	FileUploadAndDownloadService
 	RecruitService
 	ChatService
+	MarkdownService
 }

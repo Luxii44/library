@@ -1,50 +1,63 @@
 <template>
     <div class="markdown-box">
-        <!-- <div style="height:100%;display: flex;flex: 1;">
-            <div style="height: 100%;width:calc((100% - 20px)/2);padding:10px;box-sizing: border-box;background:linear-gradient(180deg,rgba(255, 0, 0,0.2) 0%,rgba(255, 255, 0, 0.5) 50%,rgba(0, 0, 255,0.8) 100%,transparent);font-size: 12px;color:rgb(100, 19, 251);">
-                <pre contenteditable="true" style="">
-                    <div>21321</div>
-                </pre>
-            </div>
-            <div style="height: 100%;width:20px;background-color: #ccc;">
-
-            </div>
-            <div style="height: 100%;width:calc((100% - 20px)/2)">
-                <pre>
-                    <div>21321</div>
-                </pre>
-            </div>
-        </div> -->
-        <v-md-editor v-model="input" height="100%"></v-md-editor>
-        <!-- <div style="border: 1px solid #ccc">
-            <Toolbar
-                style="border-bottom: 1px solid #ccc"
-                :editor="editorRef"
-                :defaultConfig="toolbarConfig"
-                :mode="mode"
-            />
-            <Editor
-                style="min-height: 250px; overflow-y: hidden;"
-                v-model="valueHtml"
-                :defaultConfig="editorConfig"
-                :mode="mode"
-                @onCreated="handleCreated"
-            />
+        <div class="md-title-box">
+            <el-input type="text" size="large" v-model="Title" placeholder="标题" style="border: none !important;"/>
+        </div>
+        <v-md-editor v-model="input" height="calc(100% - 54px)" @save="saveMD"></v-md-editor>
+        <!-- <div>
+            <video style="height: 500px;width: 100%;" src="http://47.106.153.221:8091/live/ch45.flv"></video>
         </div> -->
     </div>
 
 </template>
     
 <script setup>
+    import {
+        saveMarkdown,
+    } from '@/api/markdown'
 //   import WarningBar from '@/components/warningBar/warningBar.vue'
     import { connectWS,WebSocketTaskList,getMessage,sendMessage } from '@/api/chat'
 //   import { getDB as getDBAPI } from '@/api/autoCode'
     import { ref, watch, onMounted,onBeforeUnmount } from 'vue'
     import { formatTimeToStr } from '@/utils/date'
     import { a } from '@/utils/preventDebug'
-   
 
-    //   a()
+    let Title=ref("")
+    const saveMD=async(e)=>{
+        if (Title.value==""){
+            Title.value="无标题"
+        }
+        const res = await saveMarkdown({
+            Description: "",
+            authorized_status: false,
+            categories: "",
+            markdowncontent:e,
+            cover_images: [],
+            cover_type: 1,
+            id:132211147,
+            is_new: 1,
+            level: "1",
+            not_auto_saved: "1",
+            original_link: "",
+            pubStatus: "draft",
+            readType: "public",
+            resource_id: "",
+            resource_url: "",
+            source: "pc_mdeditor",
+            status: 2,
+            tags: "",
+            title: Title.value,
+            type: "original",
+            vote_id: 0
+        })
+        if (res.code === 0) {
+            ElMessage({
+                type: 'success',
+                message: res.msg
+            })
+        }
+    }
+
     let input = ref('')
     watch(input,(newVal)=>{
         console.log(newVal)
@@ -74,6 +87,9 @@
     padding: 24px;
     background-color: #fff;
     box-sizing: border-box;
+    .md-title-box{
+        margin-bottom: 20px;
+    }
     /* 头像 */
       .avatar {
         border-radius: 50%;
