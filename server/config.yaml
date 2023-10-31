@@ -85,7 +85,7 @@ hua-wei-obs:
   access-key: you-access-key
   secret-key: you-secret-key
 jwt:
-  signing-key: 15a462b2-7588-4e3a-bcfc-172159cbcb79
+  signing-key: 6ef592c3-4540-4072-87b9-8256bbfa7cca
   expires-time: 7d
   buffer-time: 1d
   issuer: qmPlus
@@ -112,7 +112,7 @@ mysql:
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: gva
   username: root
-  password: 123456root
+  password: root
   prefix: ""
   singular: false
   engine: ""
